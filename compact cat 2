@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>      
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime website</title>
+    <link rel="icon" href="cover.image.jpg" type="image/x-icon">
+    <link rel="stylesheet" href="anime.css">
+    <link rel="import" href="anime2.html">
+    <link rel="import" href="anime3.html">
+    <link rel="import" href="anime4.html">
+    <link rel="import" href="anime6.html">
+</head>
+<body>
+    <div class="one">
+        <ul>
+            <li><a href="anime2.html">DESCRIPTION</a></li>
+            <li><a href="anime3.html">VIDEO</a></li>
+            <li><a href="anime4.html">GALLERY</a></li>
+            <li><a href="anime6.html" >END</a></li>
+          </ul>
+    </div>
+    <div class="col">
+      <div class="nav">
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#news">News</a></li>
+            <li><a href="#contact">Contact</a>
+            <li><a href="#about">About Us</a></li>
+        </ul>
+      </div>
+     
+    </div>
+    <div class="another">
+      <div class="row">
+        <div class="header">
+        <h1>Anime</h1>
+        </div>
+        <div class="column">
+            <h4>Information about the anime series.</h4>
+            <p><q>Anime is a style of animation that originated in Japan and has become popular worldwide. It covers a wide range of genres, including action, romance, fantasy, science fiction, and more. One of the distinguishing features of anime is its colorful artwork, fantastical themes, and vibrant characters.</q></p>
+
+        </div>
+        <div class="column">
+            <h4>Character Images</h4>
+                <div class="rew">
+                <img src="anime2.jpg" alt="nagasaki">
+                </div>
+                <div class="rew">
+                    <img src="anime5.jpg" alt="">
+                </div>
+
+        </div>
+        <div class="column">
+            <h4>info</h4>
+            <p><q>Anime can be found in various forms, including television series, films, and web series. It often features complex storylines, well-developed characters, and richly detailed settings. Some popular anime series include "Naruto," "One Piece," "Attack on Titan," "My Hero Academia," and "Dragon Ball."</q></p>
+
+        </div>
+
+      </div>
+      <div class="bottom">
+        <p>&lt;&lt; &copy; 2023 Anime Company, Inc.&gt;&gt;</p>
+
+      </div>
+     
+    </div>
+    
+    
+</body>
+</html>
+   
+
