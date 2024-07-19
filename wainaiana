@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Obituary</title>
+    <link rel="stylesheet" href="jew.css">
+</head>
+<body>
+    <h1>In Loving Memory</h1>
+    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+      <?php
+        // Define variables and initialize with empty values
+        $nameErr = $dobErr = $dodErr = $contentErr = $authorErr = "";
+        $name = $dob = $dod = $content = $author = "";
+  
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+          // Name validation
+          if (empty($_POST["name"])) {
+            $nameErr = "Name is required";
+          } else {
+            $name = test_input($_POST["name"]);
+          }
+  
+          // Date of Birth validation
+          if (empty($_POST["dob"])) {
+            $dobErr = "Date of Birth is required";
+          } else {
+            $dob = test_input($_POST["dob"]);
+          }
+  
+          // Date of Death validation
+          if (empty($_POST["dod"])) {
+            $dodErr = "Date of Death is required";
+          } else {
+            $dod = test_input($_POST["dod"]);
+          }
+  
+          // Content validation - basic check for empty content
+          if (empty($_POST["content"])) {
+            $contentErr = "Obituary content is required";
+          } else {
+            $content = test_input($_POST["content"]);
+          }
+  
+          // Author validation
+          if (empty($_POST["author"])) {
+            $authorErr = "Author name is required";
+          } else {
+            $author = test_input($_POST["author"]);
+          }
+        }
+  
+        function test_input($data) {
+          $data = trim($data);
+          $data = stripslashes($data);
+          $data = htmlspecialchars($data);
+          return $data;
+        }
+      ?>
+  
+      <div class="form-group">
+        <label for="name">Deceased Name:</label>
+        <input type="text" name="name" id="name" value="<?php echo $name; ?>" <?php if (isset($nameErr)) echo "class='error'"; ?>>
+        <span class="error">* <?php echo $nameErr; ?></span>
+      </div>
+      <div class="form-group">
+        <label for="dob">Date of Birth:</label>
+        <input type="date" name="dob" id="dob" value="<?php echo $dob; ?>" <?php if (isset($dobErr)) echo "class='error'"; ?>>
+        <span class="error">* <?php echo $dobErr; ?></span>
+      </div>
+      <div class="form-group">
+        <label for="dod">Date of Death:</label>
+        <input type="date" name="dod" id="dod" value="<?php echo $dod; ?>" <?php if (isset($dodErr)) echo "class='error'"; ?>>
+        <span class="error">* <?php echo $dodErr; ?></span>
+      </div>
+      <div class="form-group">
+        <label for="content">Obituary Content:</label>
+        <textarea name="content" id="content" rows="10"><?php echo $content; ?></textarea>
+        <span class="error">* <?php echo $contentErr; ?></span>
+      </div>
+      <div class="form-group">
+        <label for="author">Submitted By:</label>
+        <input type="text" name="author" id="author" value="<?php echo $author; ?>" <?php if (isset($authorErr)) echo "class='error'"; ?>>
+        <span class="error">* <?php echo $authorErr; ?></span>
+      </div>
+      <button type="submit">Submit Obituary</button>
+    </form>
+    from django.shortcuts import render, redirect
+from .models import Obituary
+from django.db import models
+
+# Define Obituary model
+class Obituary(models.Model):
+  name = models.CharField(max_length=100)
+  date_of_birth = models.DateField()
+  date_of_death = models.DateField()
+  content = models.TextField()
+  author = models.CharField(max_length=100)
+  submission_date = models.DateTimeField(auto_now_add=True)
+  slug = models.CharField(max_length=255, unique=True)
+  # ... (add other fields if needed)
+
+# Script to handle obituary submissions
+def submit_obituary(request):
+  if request.method == 'POST':
+    name = request.POST.get('name')
+    date_of_birth = request.POST.get('date_of_birth')
+    date_of_death = request.POST.get('date_of_death')
+    content = request.POST.get('content')
+    author = request.POST.get('author')
+    # ... (process other form fields)
+
+    try:
+      # Create a new obituary object
+      obituary = Obituary(name=name, date_of_birth=date_of_birth, 
+                           date_of_death=date_of_death, content=content, author=author)
+      obituary.save()
+      # Success message
+      message = "Obituary submitted successfully!"
+      return render(request, 'success.html', {'message': message})
+    except Exception as e:
+      # Error handling
+      error_message = f"An error occurred: {e}"
+      return render(request, 'submit_obituary.html', {'error': error_message})
+  else:
+    # Display the obituary submission form
+    return render(request, 'submit_obituary.html')
+
+# Script to retrieve and display obituaries
+def view_obituaries(request):
+  # Retrieve all obituaries
+  obituaries = Obituary.objects.all().order_by('-date_of_death')
+  # ... (implement pagination if needed)
+
+  context = {'obituaries': obituaries}
+  return render(request, 'view_obituaries.html', context)
+
+    
+</body>
+</html>
